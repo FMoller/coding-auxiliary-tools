@@ -1,4 +1,4 @@
 ext,name,slcmt,mlcmto,mlcmtc,idel,bo,bc
-.py,python,#,""",""",\n,\t,-\t
+.py,python,#,""",""",\n,\n4p,\n-4p
 .c,C,//,/*,*/,;,{,}
 .cpp,C++,//,/*,*/,;,{,}
