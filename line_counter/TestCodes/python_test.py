@@ -1,4 +1,6 @@
-"""A simple file to test the line_counter performance in python"""
+"""A simple file to test the line_counter performance in python
+This is a multiline doctest
+"""
 
 __author__ = "Frederico Moeller"
 __copyright__ = ""
@@ -15,6 +17,8 @@ import math
 #define things
 def some_function(var_one, var_two,
                   var_three):
+    """This is a function that do things"""
+    
     if var_one > var_two:
         if var_two*var_three > var_one:
             return "blab" #this happens
