@@ -26,7 +26,24 @@ def get_ext(f_name):
         if f_name[i]=='.':
             return f_name[i:]
     return None
+
+def read_ln(code,end,st=0):
+    pass
+
+def is_mlcmto(line,mlcmto):
+    """Test if the line is an start of a
+    multiple line comment, or docstring
+    """
+    return line[:len(mlcmto)]== mlcmto
+
+def is_mlcmtc(line,mlcmtc):
+    """Test if the line is an end of a
+    multiple line comment, or docstring
+    """
+    return line[-len(mlcmto):]== mlcmtc
     
+
+
 def get_info(f_path,f_name):
     """Extract the info about the file"""
 
@@ -46,14 +63,10 @@ def get_info(f_path,f_name):
         if len(line)==0:
             break
         else:
-            if line[:3] == '"""':
-                print("Start docstring")
-                if line[-4:] == '"""\n':
-                    print("End docstring")
-                d_string = True
-                d_str_c += 1
+            if d_string:
+                d_str_c+=1
                 
-            print(list(line))
+                
 
         
     
