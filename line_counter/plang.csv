@@ -1,0 +1,4 @@
+ext,name,slcmt,mlcmto,mlcmtc,idel,bo,bc
+.py,python,#,""",""",\n,\t,-\t
+.c,C,//,/*,*/,;,{,}
+.cpp,C++,//,/*,*/,;,{,}
