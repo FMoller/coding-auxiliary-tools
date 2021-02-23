@@ -14,8 +14,8 @@ __status__ = "Prototype"
 
 import pandas as pd
 
-file_name = "python_test.py"
-file_path = "TestCodes/"
+file_name = "line_counter.py"
+file_path = ""
 lang_data = pd.read_csv("plang.csv")
 lang_data = lang_data.set_index('ext')
 
@@ -66,7 +66,14 @@ def is_cmt(line,cmt):
                     else:
                         break
     return False
-    
+
+def is_void(line):
+    """Test if it is a void line"""
+
+    for i in line:
+        if i!=' ' and i!='\t' and i!='\n':
+            return False
+    return True
 
 def get_mlcmts(l_data):
     """Get the multiple lines comment, or
@@ -92,6 +99,10 @@ def get_info(f_path,f_name):
 
     d_string = False
     d_str_c = 0
+    cmt_c = 0
+    v_line_c = 0
+    code_c = 0
+    
     ext = get_ext(f_name)
     try:
         l_data = lang_data.loc[ext]
@@ -121,16 +132,10 @@ def get_info(f_path,f_name):
                     if is_mlcmt(line,mlcmto,mlcmtc)[1]==-1:
                         d_string = True
                 elif is_cmt(line,cmt):
-                    print("CMT")
-
-                    
-                    
-                
-                
-                
-
-        
-    
-    
-
+                    cmt_c+=1
+                elif is_void(line):
+                    v_line_c+=1
+                else:
+                    code_c+=1
+    print(code_c)
 get_info(file_path,file_name)
