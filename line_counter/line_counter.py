@@ -43,19 +43,19 @@ def get_ext(f_name):
 ##                
 ##            return(code[st:i+1],i+1)
 ##    return("",len(code))
-##        
-##
-##def is_mlcmto(line,mlcmto):
-##    """Test if the line is an start of a
-##    multiple line comment, or docstring
-##    """
-##    return line[:len(mlcmto)]== mlcmto
-##
-##def is_mlcmtc(line,mlcmtc):
-##    """Test if the line is an end of a
-##    multiple line comment, or docstring
-##    """
-##    return line[-len(mlcmto):]== mlcmtc
+        
+
+def is_mlcmto(line,mlcmto):
+    """Test if the line is an start of a
+    multiple line comment, or docstring
+    """
+    return line[:len(mlcmto)]== mlcmto
+
+def is_mlcmtc(line,mlcmtc):
+    """Test if the line is an end of a
+    multiple line comment, or docstring
+    """
+    return line[-len(mlcmto):]== mlcmtc
 
 def get_mlcmts(l_data):
     """ Get the multiple lines comment, or
@@ -65,6 +65,8 @@ def get_mlcmts(l_data):
     for i in range(2):
         if delim[i] == '3dq':
             delim[i] = '"""'
+        elif delim[i] == '3dqn':
+            delim[i] = '"""\n'
     return delim
     
 
@@ -79,7 +81,8 @@ def get_info(f_path,f_name):
         l_data = lang_data.loc[ext]
         print("File:",f_name)
         print("Language:",l_data["name"])
-        end = ["\n",'"""']
+        mlcmto,mlcmtc = get_mlcmts(l_data)
+        
     except:
         raise ValueError("Extension not found in plang.csv")
     f = open(f_path+f_name,"r")
@@ -89,9 +92,10 @@ def get_info(f_path,f_name):
         print("")
         if len(line)==0:
             break
-##        else:
-##            if d_string:
-##                d_str_c+=1
+        else:
+            if d_string:
+                d_str_c+=1
+                if
                 
                 
 
