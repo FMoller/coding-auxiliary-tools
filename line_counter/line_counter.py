@@ -45,20 +45,31 @@ def get_ext(f_name):
 ##    return("",len(code))
         
 
-def is_mlcmto(line,mlcmto):
-    """Test if the line is an start of a
-    multiple line comment, or docstring
+def is_mlcmt(line,mlcmto,mlcmtc):
+    """Test if the line has an start, end
+    or both of multiple line comment delimiters
     """
-    return line[:len(mlcmto)]== mlcmto
+    
+    return [line.find(mlcmto),line.find(mlcmtc)]
 
-def is_mlcmtc(line,mlcmtc):
-    """Test if the line is an end of a
-    multiple line comment, or docstring
-    """
-    return line[-len(mlcmto):]== mlcmtc
+def is_cmt(line,cmt):
+    """Test if it is an comment line"""
+
+    if len(line)==1:
+        return False
+    else:
+        for i in range(len(line)):
+            if line[i]!=' ' and line[i]!='\t':
+                if len(line[i:])>len(cmt):
+                    if line[i:i+len(cmt)]==cmt:
+                        return True
+                    else:
+                        break
+    return False
+    
 
 def get_mlcmts(l_data):
-    """ Get the multiple lines comment, or
+    """Get the multiple lines comment, or
     docstring delimiters"""
 
     delim = [l_data["mlcmto"],l_data["mlcmtc"]]
@@ -69,7 +80,12 @@ def get_mlcmts(l_data):
             delim[i] = '"""\n'
     return delim
     
+def get_cmt(l_data):
+    """Get the comment startets"""
 
+    starter = l_data["slcmt"]
+    return starter
+    
 
 def get_info(f_path,f_name):
     """Extract the info about the file"""
@@ -82,6 +98,7 @@ def get_info(f_path,f_name):
         print("File:",f_name)
         print("Language:",l_data["name"])
         mlcmto,mlcmtc = get_mlcmts(l_data)
+        cmt = get_cmt(l_data)
         
     except:
         raise ValueError("Extension not found in plang.csv")
@@ -89,13 +106,26 @@ def get_info(f_path,f_name):
     while True:
         line = f.readline()
         print(list(line))
-        print("")
+        #print("")
         if len(line)==0:
             break
         else:
             if d_string:
                 d_str_c+=1
-                if
+                if is_mlcmt(line,mlcmto,mlcmtc)[1]>=0:
+                    d_string = False
+
+            else:
+                if is_mlcmt(line,mlcmto,mlcmtc)[0]>=0:
+                    d_str_c+=1
+                    if is_mlcmt(line,mlcmto,mlcmtc)[1]==-1:
+                        d_string = True
+                elif is_cmt(line,cmt):
+                    print("CMT")
+
+                    
+                    
+                
                 
                 
 
