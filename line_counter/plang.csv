@@ -2,3 +2,4 @@ ext,name,slcmt,mlcmto,mlcmtc,idel,bo,bc
 .py,python,#,3dq,3dqn,bln,bln+:,bln-4p
 .c,C,//,/*,*/,;,{,}
 .cpp,C++,//,/*,*/,;,{,}
+.js,javascript,//,/*,*/,;,{,}
