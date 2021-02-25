@@ -14,8 +14,8 @@ __status__ = "Prototype"
 
 import pandas as pd
 
-file_name = "line_counter.py"
-file_path = ""
+file_name = "charcreator.py"
+file_path = "../../therise/"
 lang_data = pd.read_csv("plang.csv")
 lang_data = lang_data.set_index('ext')
 
