@@ -14,8 +14,8 @@ __status__ = "Prototype"
 
 import pandas as pd
 
-file_name = "charcreator.py"
-file_path = "../../therise/"
+file_name = "ArrayReverser.cpp"
+file_path = "../handy_asm/array_man/Reverser/"
 lang_data = pd.read_csv("plang.csv")
 lang_data = lang_data.set_index('ext')
 
