@@ -3,3 +3,4 @@ ext,name,slcmt,mlcmto,mlcmtc,idel,bo,bc
 .c,C,//,/*,*/,;,{,}
 .cpp,C++,//,/*,*/,;,{,}
 .js,javascript,//,/*,*/,;,{,}
+.asm,assembly,;,COMMENT,@,bln,,
