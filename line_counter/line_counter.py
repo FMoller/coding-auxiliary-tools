@@ -14,8 +14,8 @@ __status__ = "Prototype"
 
 import pandas as pd
 
-file_name = "Reverser.asm"
-file_path = "../handy_asm/array_man/Reverser/"
+file_name = "gameS.js"
+file_path = "../../vnovel1/js/"
 lang_data = pd.read_csv("plang.csv")
 lang_data = lang_data.set_index('ext')
 
