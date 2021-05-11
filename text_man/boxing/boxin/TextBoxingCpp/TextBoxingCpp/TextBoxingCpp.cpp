@@ -9,13 +9,11 @@ std::string boxing(std::string text) {
     std::string new_string = "\xBA", top_row = "\xC9", down_row = "\xC8";
     int max_len = 0, act_len = 0;
     for (int i = 0; i < text_len; i++) {
-        new_string = new_string + text[i];
         if (text[i] == '\t') {
-            act_len += 4;
+            act_len += 8-( act_len % 8);
         }
         else {
             if (text[i] == '\n') {
-                new_string = new_string + '\xBA';
                 if (act_len > max_len) {
                     max_len = act_len;
                 }
@@ -24,23 +22,54 @@ std::string boxing(std::string text) {
             else {
                 act_len += 1;
             }
-
         }
     }
-    for (int i = 0; i < max_len+1; i++) {
+    if (act_len > max_len) max_len = act_len;
+    act_len = 1;
+    for (int i = 0; i < text_len; i++) {
+        if (text[i] == '\n') {
+            while (act_len <= max_len) {
+                new_string += ' ';
+                act_len++;
+            }
+            new_string += "\xBA\n\xBA";
+            act_len = 1;
+        }
+        else {
+            if (text[i] == '\t') {
+                act_len += 8 - (act_len % 8);
+                new_string += '\t';
+            }
+            else {
+                new_string = new_string + text[i];
+                act_len++;
+            }
+        }
+        
+    }
+    while (act_len <= max_len) {
+        new_string += ' ';
+        act_len++;
+    }
+    new_string += "\xBA";
+    for (int i = 0; i < max_len; i++) {
         top_row += '\xCD';
         down_row += '\xCD';
     }
+    top_row += '\xBB';
+    down_row += '\xBC';
 
     return top_row+'\n'+new_string+'\n'+down_row;
 }
 
 int main()
 {
-    std::string text, text2;
-    text = "This is some text to be boxed. \n \t we expect the boxing box the thing to be boxed.\n I hope it works.\n\n But I do not believe it";
-    text2 = "oito\n";
-    std::cout << boxing(text);
+    std::string text, text2, text3;
+    text = "This is some text to be boxed. \n \t\t we expect the boxing box the thing to be boxed.\n I hope it works.\n\n But I do not believe it";
+    text2 = "oito";
+    text3 = "0123456789012345678901234567890123456789\n0\t1\n00\t1";
+    std::cout << boxing(text3);
+    //std::cout << text3;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
