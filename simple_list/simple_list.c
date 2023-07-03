@@ -65,6 +65,42 @@ void print_list(list* lt) {
 	}
 }
 
+void insert(int pos, int new_value, list* lt) {
+	node* nd, * nd_prev, * new_node;
+	nd = lt->header;
+	nd_prev = lt->header;
+	if (abs(pos) > lt->len) {
+		printf("\n Out of Range \n");
+	}
+	else {
+		if (pos < 0) {
+			pos = lt->len + pos;
+		}
+		if (lt->len == pos)
+			append(new_value, lt);
+		else {
+			new_node = (node*)malloc(sizeof(node));
+			new_node->value = new_value;
+			for (int i = 0; i < pos; i++, nd = nd->next) {
+				nd_prev = nd;
+			}
+			new_node->next = nd;
+			new_node->index = pos;
+			if (pos == 0) {
+				lt->header = new_node;
+			}
+			else {
+				nd_prev->next = new_node;
+			}
+			for (; nd->next != NULL; nd = nd->next) {
+				nd->index++;
+			}
+			nd->index++;
+			lt->len++;
+		}
+	}
+}
+
 int main() {
 	printf("Test");
 	list* lst1 = newList();
@@ -74,6 +110,15 @@ int main() {
 	print_list(lst1);
 	append(8, lst1);
 	printf("\n 8 adicionado\n");
+	print_list(lst1);
+	insert(2, 88, lst1);
+	printf("\n Insert 88 feito \n");
+	print_list(lst1);
+	insert(4, 4, lst1);
+	printf("\n Insert 4 feito \n");
+	print_list(lst1);
+	insert(6, 12, lst1);
+	printf("\n Insert 12 feito \n");
 	print_list(lst1);
 
 }
