@@ -54,8 +54,8 @@ void append(int node_val, list* lt) {
 		lt->tail = new_node;
 	}
 	else {
-		lt->tail->next = new_node;
-		lt->tail = new_node;
+	lt->tail->next = new_node;
+	lt->tail = new_node;
 	}
 	new_node->index = lt->len;
 	lt->len++;
@@ -150,7 +150,7 @@ node* find(int value, list* lt) {
 * Just deletes a node given a position, does not try connect the prev node to the next one. used just to delete the list
 */
 void just_del_pos(int pos, list* lt) {
-	free(get_fromPos(pos, lt));
+	free(get_fromPos(pos,lt));
 }
 
 /*
@@ -164,51 +164,96 @@ void del_list(list* lt) {
 	printf("\n List Deleted");
 }
 
+/*
+*  Removes the first node with the value, returns its index and repair the list returns -1 if value not found
+*/
+int remove(int val, list* lt) {
+	node* before = lt->header;
+	node* nd;
+	int index = -1;
+	for (nd = lt->header; nd != NULL;before = nd, nd = nd->next) {
+		if (nd->value == val) {
+			index = nd->index;
+			break;
+		}
+	}
+	if (index == -1) {
+		return index;
+	}
+	if (nd->index == 0) {
+		lt->header = nd->next;
+	}
+	else {
+		before->next = nd->next;
+	}
+	free(nd);
+	return index;
+}
+
+list* copy_list(list* ls) {
+	list* cp_ls = newList();
+	for (node* nd = ls->header; nd != NULL; nd = nd->next) {
+		append(nd->value, cp_ls);
+	}
+
+	return cp_ls;
+}
 
 
 int main() {
-	for (int i = 0; i < 3000000000; i++);
-	printf("Test");
+	//for (int i = 0; i < 3000000000; i++);
+	//printf("Test");
 	list* lst1 = newList();
-	node* teste;
-	for (int i = 0; i < 3000000000; i++);
-	printf("\n 8 adicionado\n");
-	for (int i = 0; i < 3000000000; i++);
-	for (int i = 0; i < 10000; i++) {
-		append(i, lst1);
-	}
+	list* lst2 = newList();
+	//node* teste;
+	//for (int i = 0; i < 3000000000; i++);
+	//printf("\n 8 adicionado\n");
+	//for (int i = 0; i < 3000000000; i++);
+	//for (int i = 0; i < 10000; i++){
+	//	append(i, lst1);
+	//}
 	//print_list(lst1);
 	append(4, lst1);
 	append(11, lst1);
 	append(13, lst1);
 	//print_list(lst1);
 	append(3, lst1);
+	append(11, lst1);
+	lst2 = copy_list(lst1);
+	printf("\n################################\n");
+	print_list(lst1);
+	remove(11, lst1);
+	printf("\n################################\n");
+	print_list(lst1);
+	printf("\n################################\n");
+	print_list(lst2);
+
 	//printf("\n 3 adicionado\n");
-	for (int i = 0; i < 3000000000; i++);
+	//for (int i = 0; i < 3000000000; i++);
 	//print_list(lst1);
-	insert(2, 88, lst1);
+	//insert(2, 88, lst1);
 	//printf("\n Insert 88 feito \n");
 	//print_list(lst1);
-	insert(4, 4, lst1);
+	//insert(4, 4, lst1);
 	//printf("\n Insert 4 feito \n");
 	//print_list(lst1);
-	insert(6, 12, lst1);
+	//insert(6, 12, lst1);
 	//printf("\n Insert 12 feito \n");
 	//print_list(lst1);
-	teste = get_fromPos(2, lst1);
+	//teste = get_fromPos(2, lst1);
 	//printf("\n Pos 2 da lista eh %d", teste->value);
-	teste = get_fromPos(-1, lst1);
-	printf("\n Pos -1 da lista eh %d", teste->value);
-	printf("\n ************* \n HEADER INDEX %d\n ************* \n", lst1->header->index);
-	teste = find(4, lst1);
-	printf("\n\n list len = %d", lst1->len);
-	if (teste != NULL) {
-		printf("\n the first position of 4 in the list is %d", teste->index);
-	}
-
-	for (int i = 0; i < 3000000000; i++);
-	del_list(lst1);
-	print_list(lst1);
-	for (int i = 0; i < 9000000000; i++);
+	//teste = get_fromPos(-1, lst1);
+	//printf("\n Pos -1 da lista eh %d", teste->value);
+	//printf("\n ************* \n HEADER INDEX %d\n ************* \n",lst1->header->index);
+	//teste = find(4, lst1);
+	//printf("\n\n list len = %d", lst1->len);
+	//if (teste != NULL) {
+	//	printf("\n the first position of 4 in the list is %d", teste->index);
+	//}
+	
+	//for (int i = 0; i < 3000000000; i++);
+	//del_list(lst1);
+	//print_list(lst1);
+	//for (int i = 0; i < 9000000000; i++);
 
 }
