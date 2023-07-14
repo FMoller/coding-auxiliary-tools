@@ -190,12 +190,21 @@ int remove(int val, list* lt) {
 	return index;
 }
 
+list* copy_list(list* ls) {
+	list* cp_ls = newList();
+	for (node* nd = ls->header; nd != NULL; nd = nd->next) {
+		append(nd->value, cp_ls);
+	}
+
+	return cp_ls;
+}
 
 
 int main() {
 	//for (int i = 0; i < 3000000000; i++);
 	//printf("Test");
 	list* lst1 = newList();
+	list* lst2 = newList();
 	//node* teste;
 	//for (int i = 0; i < 3000000000; i++);
 	//printf("\n 8 adicionado\n");
@@ -210,11 +219,14 @@ int main() {
 	//print_list(lst1);
 	append(3, lst1);
 	append(11, lst1);
+	lst2 = copy_list(lst1);
 	printf("\n################################\n");
 	print_list(lst1);
 	remove(11, lst1);
 	printf("\n################################\n");
 	print_list(lst1);
+	printf("\n################################\n");
+	print_list(lst2);
 
 	//printf("\n 3 adicionado\n");
 	//for (int i = 0; i < 3000000000; i++);
