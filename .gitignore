@@ -235,3 +235,4 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 simple_list/simple_list.c.bak
+some_shell/hbase_scan_to_file.sh.bak

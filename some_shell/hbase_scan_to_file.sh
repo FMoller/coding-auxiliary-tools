@@ -1,0 +1,1 @@
+echo "scan 'namespace:table'" | ./hbase shell > file.txt
