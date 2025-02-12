@@ -2,41 +2,49 @@
 #include<stdlib.h>
 
 /*
-* A simple list that each node stores a int value, so I dont have to figure how to implement this shit,
+* File Name: simple_list.c
+* Description: A simple list that each node stores a int value, so I dont have to figure how to implement this thing,
 * and open  "C completo e total" book each time I need a list in C ANSI.
 * Author: Frederico Möller
-* Date: 2023 - Jul - 01
+* Created: 2023 - Jul - 01
+* Copyright MIT license
+* Modification History:
+* 2025 - Fev -12 - Updated the file description.
 */
 
 /*
 * A list node
 */
 struct list_node {
-	int index;
 	int value;
 	struct list_node* next;
 };
-typedef struct list_node node;
+typedef struct list_node node_s;
 
 /*
 * A list
 */
 struct list_s {
-	node* header;
-	node* tail;
+	node_s* head;
+	node_s* tail;
 	int len;
 };
-typedef struct list_s list;
+typedef struct list_s list_simple;
 
 /*
 * List "constructor"
 */
-list* newList() {
-	list* new_list = (list*)malloc(sizeof(list));
-	new_list->header = NULL;
-	new_list->tail = NULL;
-	new_list->len = 0;
-	return new_list;
+list_simple* newListSimple() {
+	list_simple* new_list_simple = (list_simple*)malloc(sizeof(list_simple));
+	if (new_list_simple == NULL) {
+		//In case of no memory left
+        printf(stderr, "Error: Memory allocation failed!\n");  
+        return NULL; 
+    }
+	new_list_simple->head = NULL;
+	new_list_simple->tail = NULL;
+	new_list_simple->len = 0;
+	return new_list_simple;
 }
 
 /*
