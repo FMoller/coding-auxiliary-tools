@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stddef.h> // size_t
 
 /*
 * File Name: simple_list.c
@@ -9,14 +10,14 @@
 * Created: 2023 - Jul - 01
 * Copyright MIT license
 * Modification History:
-* 2025 - Fev -12 - Updated the file description.
+* 2025 - Fev -12 - Updated the file description and excluded the index member of a node
 */
 
 /*
 * A list node
 */
 struct list_node {
-	int value;
+	int data;
 	struct list_node* next;
 };
 typedef struct list_node node_s;
@@ -27,7 +28,7 @@ typedef struct list_node node_s;
 struct list_s {
 	node_s* head;
 	node_s* tail;
-	int len;
+	size_t len;
 };
 typedef struct list_s list_simple;
 
@@ -52,33 +53,48 @@ list_simple* newListSimple() {
 * reg_value = the value of the element to be included on the list
 * lt = the list
 */
-void append(int node_val, list* lt) {
-	node* new_node;
-	new_node = (node*)malloc(sizeof(node));
-	new_node->value = node_val;
+void append(int node_data, list_simple* lt) {
+	node_s* new_node;
+	new_node = (node_s*)malloc(sizeof(node_s));
+	if (new_node == NULL) {
+		//In case of no memory left
+        printf(stderr, "Error: Memory allocation failed!\n");  
+        return 1; 
+    }
+	new_node->data = node_data;
 	new_node->next = NULL;
 	if (lt->len == 0) {
-		lt->header = new_node;
+		lt->head = new_node;
 		lt->tail = new_node;
 	}
 	else {
 	lt->tail->next = new_node;
 	lt->tail = new_node;
 	}
-	new_node->index = lt->len;
 	lt->len++;
+	return 0;
 }
 
 
 /*
 * Prints the list lt
 */
-void print_list(list* lt) {
-	node* nd;
-	printf("Index \t\t Value\n");
-	for (nd = lt->header; nd != NULL; nd = nd->next) {
-
-		printf("%d \t\t %d \n", nd->index, nd->value);
+void print_list(list_simple* lt) {
+	if(lt==NULL){
+		printf("Error: List pointer is Null\n");
+		return;
+	}
+	node_s* nd;
+	size_t count = 0;
+	if(lt->len >0){
+		printf("Position \t Data\n");
+		for (nd = lt->head; nd != NULL; nd = nd->next) {
+			printf("%d \t %d \n",count,nd->data);
+			count++;
+		}
+	}
+	else{
+		printf("The list is empty\n");
 	}
 }
 
@@ -86,40 +102,46 @@ void print_list(list* lt) {
 * Insert a new node in a given position
 * pos = position in the list, it can be a negative values, what would mean counting the position from the end.
 * The list values aftert the pos will be shifted one pos.
-* new_value = the value to be inserted
+* new_data = the data to be inserted
 * lt = the list
 */
-void insert(int pos, int new_value, list* lt) {
+void insert(int pos, int new_data, list* lt) {
 	node* nd, * nd_prev, * new_node;
-	nd = lt->header;
-	nd_prev = lt->header;
+	nd = lt->head;
+	nd_prev = lt->head;
+	if(lt==NULL){
+		
+		printf("Error: List pointer is Null\n");
+		return;
+	}
 	if (abs(pos) > lt->len) {
-		printf("\n Out of Range \n");
+		printf("Error: Out of Range \n");
+		return;
 	}
 	else {
 		if (pos < 0) {
 			pos = lt->len + pos;
 		}
 		if (lt->len == pos)
-			append(new_value, lt);
+			append(new_data, lt);
 		else {
 			new_node = (node*)malloc(sizeof(node));
-			new_node->value = new_value;
-			for (int i = 0; i < pos; i++, nd = nd->next) {
+			new_node->data = new_data;
+			if (new_node == NULL) {
+				//In case of no memory left
+				printf(stderr, "Error: Memory allocation failed!\n");  
+				return; 
+			}
+			for (size_t i = 0; i < pos; i++, nd = nd->next) {
 				nd_prev = nd;
 			}
 			new_node->next = nd;
-			new_node->index = pos;
 			if (pos == 0) {
-				lt->header = new_node;
+				lt->head = new_node;
 			}
 			else {
 				nd_prev->next = new_node;
 			}
-			for (; nd->next != NULL; nd = nd->next) {
-				nd->index++;
-			}
-			nd->index++;
 			lt->len++;
 		}
 	}
