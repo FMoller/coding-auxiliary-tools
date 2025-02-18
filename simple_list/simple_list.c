@@ -105,8 +105,8 @@ void print_list(list_simple* lt) {
 * new_data = the data to be inserted
 * lt = the list
 */
-void insert(int pos, int new_data, list* lt) {
-	node* nd, * nd_prev, * new_node;
+void insert(int pos, int new_data, list_simple* lt) {
+	node_s* nd, * nd_prev, * new_node;
 	nd = lt->head;
 	nd_prev = lt->head;
 	if(lt==NULL){
@@ -125,7 +125,7 @@ void insert(int pos, int new_data, list* lt) {
 		if (lt->len == pos)
 			append(new_data, lt);
 		else {
-			new_node = (node*)malloc(sizeof(node));
+			new_node = (node_s*)malloc(sizeof(node_s));
 			new_node->data = new_data;
 			if (new_node == NULL) {
 				//In case of no memory left
@@ -151,13 +151,18 @@ void insert(int pos, int new_data, list* lt) {
 * Get a node from a position in a list
 * pos = the position of the node, it can be negative numbers, what mean the positions in backward
 */
-node* get_fromPos(int pos, list* lt) {
+node_s* get_fromPos(int pos, list_simple* lt) {
+	if(lt==NULL){
+		
+		printf("Error: List pointer is Null\n");
+		return;
+	}
 	if (pos >= lt->len || pos < -(lt->len)) {
 		printf("Position exceeds list lenght");
 		exit(-1);
 	}
 	else {
-		node* nd = lt->header;
+		node_s* nd = lt->header;
 		if (pos < 0) {
 			pos = lt->len + pos;
 		}
