@@ -210,34 +210,44 @@ void del_list(list_simple* lt) {
 }
 
 /*
-*  Removes the first node with the value, returns its index and repair the list returns -1 if value not found
+*  Removes the first node with the value, returns its index and repair the list. returns -1 if value not found
 */
-int remove(int val, list* lt) {
-	node* before = lt->header;
-	node* nd;
-	int index = -1;
-	for (nd = lt->header; nd != NULL;before = nd, nd = nd->next) {
-		if (nd->value == val) {
-			index = nd->index;
+size_t remove(int data, list_simple* lt) {
+	node_s* before = lt->header;
+	node_s* nd;
+	size_t count = 0;
+	if(lt==NULL){
+		
+		printf("Error: List pointer is Null\n");
+		return;
+	}
+	for (nd = lt->header; nd != NULL;before = nd, nd = nd->next) 
+		if (nd->data == data) {
 			break;
 		}
+		count++;
 	}
-	if (index == -1) {
-		return index;
+	if (count > lt->len) {
+		return -1;
 	}
-	if (nd->index == 0) {
+	if (count == 0) {
 		lt->header = nd->next;
 	}
 	else {
 		before->next = nd->next;
 	}
 	free(nd);
-	return index;
+	return count;
 }
 
-list* copy_list(list* ls) {
-	list* cp_ls = newList();
-	for (node* nd = ls->header; nd != NULL; nd = nd->next) {
+list_simple* copy_list(list_simple* ls) {
+	list_simple* cp_ls = newList();
+	if(ls==NULL){
+		
+		printf("Error: List pointer is Null\n");
+		return;
+	}
+	for (node_s* nd = ls->header; nd != NULL; nd = nd->next) {
 		append(nd->value, cp_ls);
 	}
 
