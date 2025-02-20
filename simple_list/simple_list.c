@@ -166,13 +166,18 @@ node_s* get_fromPos(int pos, list_simple* lt) {
 		if (pos < 0) {
 			pos = lt->len + pos;
 		}
-		for (int i = 0; i < pos; i++, nd = nd->next) {}
+		for (size_t i = 0; i < pos; i++, nd = nd->next) {}
 		return nd;
 	}
 }
 
-node* find(int value, list* lt) {
-	for (node* nd = lt->header; nd != NULL; nd = nd->next) {
+node_s* find(int data, list_simple* lt) {
+	if(lt==NULL){
+		
+		printf("Error: List pointer is Null\n");
+		return;
+	}
+	for (node_s* nd = lt->header; nd != NULL; nd = nd->next) {
 		if (nd->value == value) {
 			return nd;
 		}
@@ -184,15 +189,20 @@ node* find(int value, list* lt) {
 /*
 * Just deletes a node given a position, does not try connect the prev node to the next one. used just to delete the list
 */
-void just_del_pos(int pos, list* lt) {
+void just_del_pos(int pos, list_simple* lt) {
 	free(get_fromPos(pos,lt));
 }
 
 /*
 * Deletes the list from the memory
 */
-void del_list(list* lt) {
-	for (int i = lt->len - 1; i >= 0; i--) {
+void del_list(list_simple* lt) {
+	if(lt==NULL){
+		
+		printf("Error: List pointer is Null\n");
+		return;
+	}
+	for (size_t i = lt->len - 1; i >= 0; i--) {
 		just_del_pos(i, lt);
 	}
 	//free(lt);
